@@ -23,7 +23,15 @@ app.get('/students', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Hello James')
+    res.send('<h1>Hello James</h1>')
+}) 
+
+app.post('/add-student', (req, res) => {
+    let {name, grade} = req.body
+    db.query(`INSERT INTO students (name, grade) VALUES ("${name}", "${grade}")`, (err, results) => {
+        if (err) return res.status(500).send(err)
+            res.redirect('/students')
+    })
 })
 
 app.listen(PORT, () => {
